@@ -22,7 +22,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div>
+    <div className='search-container'>
       <input
         type="text"
         value={query}
@@ -30,7 +30,7 @@ const SearchBar = ({ onSearch }) => {
         onKeyPress={handleKeyPress}
         placeholder="Search for a song, album, or artist"
       />
-      <button onClick={handleSearch}>Search</button>
+      <button onClick={handleSearch} className='search-button'>Search</button>
     </div>
   );
 };
