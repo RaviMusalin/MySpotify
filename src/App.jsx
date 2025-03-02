@@ -8,32 +8,32 @@ function Callback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get the access token from the URL
+    // Get the access token from the URL (Spotify.getAccessToken should handle this)
     const token = Spotify.getAccessToken();
     if (token) {
-      // Save the token to localStorage or state
+      // Save the token to localStorage
       localStorage.setItem('spotifyToken', token);
-      navigate('/');
+      navigate('/'); // Redirect to home
     }
   }, [navigate]);
 
   return <div>Loading...</div>;
 }
 
-// Home component to display content when user is logged in
+// Home component to display content when the user is logged in
 function Home() {
   const token = localStorage.getItem('spotifyToken'); // Get the token from localStorage
 
-  // If there's no token, redirect the user to login page (Spotify auth)
+  // If there's no token, redirect the user to the login page (Spotify auth)
   if (!token) {
-    window.location.href = 'https://accounts.spotify.com/authorize?...'; // Replace with the Spotify auth URL
+    window.location.href = Spotify.getAuthURL(); // Use the method from Spotify utility
   }
 
   return (
     <div>
       <h1>Welcome to the Spotify App!</h1>
       <p>You are now authenticated and can start using the app.</p>
-      {/* Add more components like SearchBar, Playlist, etc. */}
+      {}
     </div>
   );
 }
@@ -46,7 +46,7 @@ function App() {
       <Routes>
         {/* Route for Spotify OAuth callback */}
         <Route path="/callback" element={<Callback />} />
-        
+
         {/* Home route */}
         <Route path="/" element={token ? <Home /> : <div>Loading...</div>} />
       </Routes>
