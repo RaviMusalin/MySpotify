@@ -64,7 +64,6 @@ function App() {
 
   // Handle the search functionality
   const handleSearch = async (query) => {
-    console.log(`Executing search for: ${query}`);
     const results = await Spotify.search(query);
     console.log("Received search results:", results);
 

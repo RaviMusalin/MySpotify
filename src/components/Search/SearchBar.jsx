@@ -5,7 +5,6 @@ const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
 
   const handleSearch = () => {
-    console.log('Search button clicked with query:', query); // Debugging log
     onSearch(query); 
   };
 
