@@ -91,6 +91,7 @@ function App() {
           <ul>
             {playlistTracks.map((track) => (
               <li key={track.id}>
+                <img src={track.albumImage} style={{width: '100px', height: '100px' }}/>
                 {track.name} by {track.artist}
               </li>
             ))}

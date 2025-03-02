@@ -4,7 +4,7 @@ import './SearchBar.css';
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
 
-  const handleSearch = () => {
+  const handleSearch = () => { 
     onSearch(query); 
   };
 

@@ -18,5 +18,3 @@ function SearchResults({ results, onAdd }) {
 }
 
 export default SearchResults;
-
-// 

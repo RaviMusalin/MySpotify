@@ -1,4 +1,3 @@
-// TrackList.jsx
 import React from 'react';
 
 function TrackList({ tracks, onAdd }) {
