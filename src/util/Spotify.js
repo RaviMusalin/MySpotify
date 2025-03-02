@@ -4,104 +4,98 @@ const REDIRECT_URI = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
 let accessToken = '';
 
 const Spotify = {
-  // Get the access token from localStorage or URL parameters (OAuth Flow)
-  getAccessToken: function() {
-    if (accessToken) {
-        return accessToken;
-    }
-
-    const urlParams = new URLSearchParams(window.location.hash.replace('#', '?'));
-    const token = urlParams.get('access_token');
-
-    if (token) {
-        accessToken = token;
-        localStorage.setItem('spotifyToken', token); // Store the token
-        return accessToken;
-    }
-
-    accessToken = localStorage.getItem('spotifyToken'); // Retrieve if stored before
-    return accessToken;
-},
-
-
-  // Redirect the user to Spotify's login page to authenticate
-  authenticate: function () {
-    const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
-      REDIRECT_URI
-    )}&scope=playlist-modify-public playlist-modify-private user-library-read user-read-private&state=34fhsf94fhs09dhf`;
-    window.location = authUrl;
+  getAuthURL() {
+    const scope = "playlist-modify-public playlist-modify-private";
+    return `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=${encodeURIComponent(
+      scope
+    )}&redirect_uri=${encodeURIComponent(redirectUri)}`;
   },
 
-  // Example search function to find tracks, albums, artists
-  search: async function (query) { 
-    let token = this.getAccessToken();
-    
-    if (!token) {
-        console.error('No access token available. Redirecting to authenticate...');
-        this.authenticate(); // Redirect for authentication if no token
-        return [];
+  getAccessToken() {
+    if (accessToken) {
+      return accessToken;
     }
 
-    try {
-        const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track,album,artist&limit=10`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+    const tokenMatch = window.location.href.match(/access_token=([^&]*)/);
+    const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
 
-        if (!response.ok) {
-            console.error(`Error fetching data: ${response.status} - ${response.statusText}`);
-            
-            if (response.status === 401) {
-                console.warn("Access token expired. Re-authenticating...");
-                localStorage.removeItem('spotifyToken'); // Clear old token
-                this.authenticate(); // Redirect to login
-            }
-            
-            return [];
-        }
+    if (tokenMatch && expiresInMatch) {
+      accessToken = tokenMatch[1];
+      const expiresIn = Number(expiresInMatch[1]);
 
-        const data = await response.json();
-        console.log('Spotify API Response:', data); // Debugging log
+      // Clear the token after expiration
+      window.setTimeout(() => (accessToken = ""), expiresIn * 1000);
+      window.history.pushState("Access Token", null, "/");
 
-        if (!data.tracks) {
-            console.error('No track data returned');
-            return [];
-        }
-
-        return data.tracks.items.map(track => ({
-            id: track.id,
-            name: track.name,
-            artist: track.artists[0].name,
-            album: track.album.name,
-            albumImage: track.album.images.length > 0 ? track.album.images[0].url : null,
-            uri: track.uri
-        }));
-    } catch (error) {
-        console.error('Error in search function:', error);
-        return [];
+      return accessToken;
     }
-},
 
+    return "";
+  },
 
-  // Save a playlist to the user's account
-  savePlaylist: function (name, trackURIs) {
-    if (!name || !trackURIs.length) return;
+  async search(term) {
+    const token = Spotify.getAccessToken();
+    if (!token) return [];
 
-    const token = this.getAccessToken();
-    if (!token) return;
+    const response = await fetch(
+      `https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(term)}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
 
-    return fetch('https://api.spotify.com/v1/me/top/artists', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: name,
-        uris: trackURIs,
-      }),
-    }).then((response) => response.json());
+    const data = await response.json();
+    if (!data.tracks) return [];
+
+    return data.tracks.items.map((track) => ({
+      id: track.id,
+      name: track.name,
+      artist: track.artists[0].name,
+      album: track.album.name,
+      albumImage: track.album.images[0]?.url, // ✅ Fetch album image
+      uri: track.uri, // ✅ Fetch track URI for saving
+    }));
+  },
+
+  async savePlaylist(name, trackUris) {
+    if (!name || !trackUris.length) return false;
+
+    const token = Spotify.getAccessToken();
+    if (!token) return false;
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+
+    // Step 1: Get User ID
+    const userResponse = await fetch("https://api.spotify.com/v1/me", { headers });
+    const userData = await userResponse.json();
+    if (!userData.id) return false;
+    const userId = userData.id;
+
+    // Step 2: Create a Playlist
+    const playlistResponse = await fetch(
+      `https://api.spotify.com/v1/users/${userId}/playlists`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ name }),
+      }
+    );
+    const playlistData = await playlistResponse.json();
+    if (!playlistData.id) return false;
+    const playlistId = playlistData.id;
+
+    // Step 3: Add Tracks to the Playlist
+    const addTracksResponse = await fetch(
+      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ uris: trackUris }),
+      }
+    );
+
+    return addTracksResponse.ok;
   },
 };
 
