@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import Spotify from './util/Spotify';
-import SearchBar from './components/SearchBar'; // Import the SearchBar component
-import SearchResults from './components/SearchResults'; // Import the SearchResults component
+import SearchBar from './components/Search/SearchBar'; // Import the SearchBar component
+import SearchResults from './components/Search/SearchResults'; // Import the SearchResults component
 
 // Callback component to handle Spotify redirect
 function Callback() {

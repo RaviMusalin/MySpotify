@@ -1,6 +1,5 @@
-// src/components/SearchResults.jsx
 import React from 'react';
-// import './SearchResults.css'; 
+import './SearchResults.css'; 
 
 
 const SearchResults = ({ results }) => {
