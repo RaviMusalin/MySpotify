@@ -19,58 +19,20 @@ function Callback() {
   return <div>Loading...</div>;
 }
 
-function Home() {
-  const token = localStorage.getItem('spotifyToken');
-  const [searchResults, setSearchResults] = useState([]);  // Holds search results
-  const [playlistTracks, setPlaylistTracks] = useState([]); // Holds added tracks
-
-  if (!token) {
-    window.location.href = Spotify.getAuthURL();
-  }
-
-  // Function to add a track to the playlist
-  function onAdd(track) {
-    if (!playlistTracks.some((t) => t.id === track.id)) {
-      setPlaylistTracks([...playlistTracks, track]);
-    }
-  }
-
-  return (
-    <div>
-      <h1>Welcome to the Spotify App!</h1>
-      <SearchBar onSearch={setSearchResults} />
-      <SearchResults results={searchResults} onAdd={onAdd} />
-      <div>
-        <h2>Your Playlist</h2>
-        {playlistTracks.length > 0 ? (
-          <ul>
-            {playlistTracks.map((track) => (
-              <li key={track.id}>
-                {track.name} by {track.artist}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No tracks added yet.</p>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function App() {
-  const [searchResults, setSearchResults] = useState([]);
-  const [playlistTracks, setPlaylistTracks] = useState([]); // Tracks in the playlist
+  const [searchResults, setSearchResults] = useState([]); // Search results
+  const [playlistName, setPlaylistName] = useState("My Playlist"); // Playlist name
+  const [playlistTracks, setPlaylistTracks] = useState([]); // Tracks added to the playlist
 
   // Handle the search functionality
   const handleSearch = async (query) => {
     const results = await Spotify.search(query);
-    console.log("Received search results:", results);
+    console.log('Received search results:', results);
 
-    if (results && results.length > 0) {
+    if (results?.length > 0) {
       setSearchResults(results);
     } else {
-      console.log("No search results received.");
+      console.log('No search results received.');
     }
   };
 
@@ -81,24 +43,58 @@ function App() {
     }
   }
 
+  // Function to remove a track from the playlist
+  function onRemove(track) {
+    setPlaylistTracks(playlistTracks.filter((t) => t.id !== track.id));
+  }
+
+  // Function to save the playlist to Spotify
+  async function savePlaylist() {
+    if (!playlistName || playlistTracks.length === 0) {
+      alert("Please enter a playlist name and add at least one track.");
+      return;
+    }
+
+    const trackUris = playlistTracks.map((track) => track.uri);
+    const success = await Spotify.savePlaylist(playlistName, trackUris);
+
+    if (success) {
+      setPlaylistName("New Playlist");
+      setPlaylistTracks([]);
+      alert("Playlist saved successfully!");
+    } else {
+      alert("There was an issue saving your playlist.");
+    }
+  }
+
   return (
     <div>
+      <h1>Spotify Playlist App</h1>
       <SearchBar onSearch={handleSearch} />
       <SearchResults results={searchResults} onAdd={onAdd} />
+
       <div>
         <h2>Your Playlist</h2>
+        <input
+          type="text"
+          value={playlistName}
+          onChange={(e) => setPlaylistName(e.target.value)}
+          placeholder="Enter playlist name"
+        />
         {playlistTracks.length > 0 ? (
           <ul>
             {playlistTracks.map((track) => (
               <li key={track.id}>
-                <img src={track.albumImage} style={{width: '100px', height: '100px' }}/>
+                <img src={track.albumImage} alt={track.name} style={{ width: '100px', height: '100px' }} />
                 {track.name} by {track.artist}
+                <button onClick={() => onRemove(track)}>Remove</button>
               </li>
             ))}
           </ul>
         ) : (
           <p>No tracks added yet.</p>
         )}
+        <button onClick={savePlaylist}>Save Playlist</button>
       </div>
     </div>
   );
