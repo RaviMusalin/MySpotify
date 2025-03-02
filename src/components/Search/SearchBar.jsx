@@ -1,36 +1,23 @@
 import React, { useState } from 'react';
-import './SearchBar.css'; 
-
+import './SearchBar.css';
 
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
 
-  const handleChange = (e) => {
-    setQuery(e.target.value);
-  };
-
   const handleSearch = () => {
-    if (query) {
-      onSearch(query);
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
+    console.log('Search button clicked with query:', query); // Debugging log
+    onSearch(query); 
   };
 
   return (
-    <div className='search-container'>
-      <input
-        type="text"
-        value={query}
-        onChange={handleChange}
-        onKeyPress={handleKeyPress}
-        placeholder="Search for a song, album, or artist"
+    <div className="SearchBar">
+      <input 
+        type="text" 
+        placeholder="Enter a song, artist, or album" 
+        value={query} 
+        onChange={(e) => setQuery(e.target.value)} 
       />
-      <button onClick={handleSearch} className='search-button'>Search</button>
+      <button onClick={handleSearch}>Search</button>
     </div>
   );
 };
