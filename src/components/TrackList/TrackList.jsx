@@ -1,19 +1,21 @@
+// TrackList.jsx
 import React from 'react';
 
-const TrackList = ({ tracks, onAdd }) => {
+function TrackList({ tracks, onAdd }) {
+  const handleAdd = (track) => {
+    onAdd(track); // Calling onAdd when the track is added
+  };
+
   return (
-    <ul>
+    <div>
       {tracks.map((track) => (
-        <li key={track.id}>
-          <p>{track.name}</p>
-          <p>{track.artist}</p>
-          <p>{track.album}</p>
-          {/* Optionally add button to add track */}
-          <button onClick={() => onAdd(track)}>Add</button>
-        </li>
+        <div key={track.id}>
+          <p>{track.name} by {track.artist}</p>
+          <button onClick={() =>  handleAdd(track)}>Add to Playlist</button>
+        </div>
       ))}
-    </ul>
+    </div>
   );
-};
+}
 
 export default TrackList;

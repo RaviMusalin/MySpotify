@@ -38,19 +38,35 @@ function Home() {
   return (
     <div>
       <h1>Welcome to the Spotify App!</h1>
-      <SearchBar setSearchResults={setSearchResults} />
+      <SearchBar onSearch={setSearchResults} />
       <SearchResults results={searchResults} onAdd={onAdd} />
+      <div>
+        <h2>Your Playlist</h2>
+        {playlistTracks.length > 0 ? (
+          <ul>
+            {playlistTracks.map((track) => (
+              <li key={track.id}>
+                {track.name} by {track.artist}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No tracks added yet.</p>
+        )}
+      </div>
     </div>
   );
 }
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
+  const [playlistTracks, setPlaylistTracks] = useState([]); // Tracks in the playlist
 
+  // Handle the search functionality
   const handleSearch = async (query) => {
     console.log(`Executing search for: ${query}`);
     const results = await Spotify.search(query);
-    console.log("Received search results:", results); // ✅ Check if results exist
+    console.log("Received search results:", results);
 
     if (results && results.length > 0) {
       setSearchResults(results);
@@ -59,11 +75,31 @@ function App() {
     }
   };
 
+  // Function to add a track to the playlist
+  function onAdd(track) {
+    if (!playlistTracks.some((t) => t.id === track.id)) {
+      setPlaylistTracks([...playlistTracks, track]);
+    }
+  }
 
   return (
     <div>
       <SearchBar onSearch={handleSearch} />
-      <SearchResults results={searchResults} />
+      <SearchResults results={searchResults} onAdd={onAdd} />
+      <div>
+        <h2>Your Playlist</h2>
+        {playlistTracks.length > 0 ? (
+          <ul>
+            {playlistTracks.map((track) => (
+              <li key={track.id}>
+                {track.name} by {track.artist}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No tracks added yet.</p>
+        )}
+      </div>
     </div>
   );
 }

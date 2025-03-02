@@ -9,7 +9,7 @@ function SearchResults({ results, onAdd }) {
     <div className="SearchResults">
       <h2>Search Results</h2>
       {results.length > 0 ? (
-        <TrackList tracks={results}/>
+        <TrackList tracks={results} onAdd={onAdd}/>
       ) : (
         <p>No results found</p>
       )}
@@ -18,3 +18,5 @@ function SearchResults({ results, onAdd }) {
 }
 
 export default SearchResults;
+
+// 
