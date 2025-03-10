@@ -96,14 +96,16 @@ function App() {
       </header>
 
       <div
-        className="background"
-        style={{
-          backgroundImage: `url(../images/${backgroundImages[backgroundIndex]})`,
-          height: "300px",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      ></div>
+      className="app-container"
+      style={{
+        backgroundImage: `url(../images/${backgroundImages[backgroundIndex]})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+        width: "100%",
+      }}
+    >
 
       <SearchBar onSearch={handleSearch} />
       <SearchResults results={searchResults} onAdd={onAdd} />
@@ -115,6 +117,7 @@ function App() {
         onNameChange={setPlaylistName}
         onSave={savePlaylist}
       />
+    </div>
     </div>
   );
 }
