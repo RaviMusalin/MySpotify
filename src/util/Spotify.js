@@ -6,9 +6,9 @@ let accessToken = '';
 const Spotify = {
   getAuthURL() {
     const scope = "playlist-modify-public playlist-modify-private";
-    return `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=${encodeURIComponent(
+    return `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=token&scope=${encodeURIComponent(
       scope
-    )}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+    )}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
   },
 
   getAccessToken() {
@@ -30,6 +30,8 @@ const Spotify = {
       return accessToken;
     }
 
+    console.log("🔑 No token found, redirecting to login...");
+    window.location.href = Spotify.getAuthURL();
     return "";
   },
 
@@ -37,22 +39,35 @@ const Spotify = {
     const token = Spotify.getAccessToken();
     if (!token) return [];
 
-    const response = await fetch(
-      `https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(term)}`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    console.log(`🔎 Searching Spotify API for: ${term}`);
+    
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(term)}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      if (!response.ok) {
+        console.error(`❌ API Error: ${response.status} - ${response.statusText}`);
+        return [];
+      }
+      
+      const data = await response.json();
+      console.log("🔍 API Response Data:", data);
+      if (!data.tracks) return [];
 
-    const data = await response.json();
-    if (!data.tracks) return [];
-
-    return data.tracks.items.map((track) => ({
-      id: track.id,
-      name: track.name,
-      artist: track.artists[0].name,
-      album: track.album.name,
-      albumImage: track.album.images[0]?.url, // ✅ Fetch album image
-      uri: track.uri, // ✅ Fetch track URI for saving
-    }));
+      return data.tracks.items.map((track) => ({
+        id: track.id,
+        name: track.name,
+        artist: track.artists[0].name,
+        album: track.album.name,
+        albumImage: track.album.images[0]?.url, // ✅ Fetch album image
+        uri: track.uri, // ✅ Fetch track URI for saving
+      }));
+    } catch (error) {
+      console.error("⚠️ Error fetching data from Spotify:", error);
+      return [];
+    }
   },
 
   async savePlaylist(name, trackUris) {

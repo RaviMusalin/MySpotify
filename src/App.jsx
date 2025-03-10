@@ -4,6 +4,7 @@ import './App.css';
 import Spotify from './util/Spotify';
 import SearchBar from './components/Search/SearchBar';
 import SearchResults from './components/Search/SearchResults';
+import Playlist from './components/Playlist/Playlist';
 
 function Callback() {
   const navigate = useNavigate();
@@ -23,6 +24,26 @@ function App() {
   const [searchResults, setSearchResults] = useState([]); // Search results
   const [playlistName, setPlaylistName] = useState("My Playlist"); // Playlist name
   const [playlistTracks, setPlaylistTracks] = useState([]); // Tracks added to the playlist
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+
+  const backgroundImages = [
+    "Jay-Z.jpg", "Kendrick.jpg"
+  ];
+
+  useEffect(() => {
+    const token = Spotify.getAccessToken();
+    if (!token) {
+      console.log("🔑 No token found, redirecting to login...");
+      window.location.href = Spotify.getAuthURL();
+    }
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBackgroundIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
+    }, 5000); // Change background every 5 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   // Handle the search functionality
   const handleSearch = async (query) => {
@@ -74,32 +95,26 @@ function App() {
         <a href="https://open.spotify.com/" target='_blank'><img src="../images/logo_black.png" className='logo'/></a>
       </header>
 
+      <div
+        className="background"
+        style={{
+          backgroundImage: `url(../images/${backgroundImages[backgroundIndex]})`,
+          height: "300px",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      ></div>
+
       <SearchBar onSearch={handleSearch} />
       <SearchResults results={searchResults} onAdd={onAdd} />
 
-      <div>
-        <h2>Your Playlist</h2>
-        <input
-          type="text"
-          value={playlistName}
-          onChange={(e) => setPlaylistName(e.target.value)}
-          placeholder="Enter playlist name"
-        />
-        {playlistTracks.length > 0 ? (
-          <ul>
-            {playlistTracks.map((track) => (
-              <li key={track.id}>
-                <img src={track.albumImage} alt={track.name} style={{ width: '100px', height: '100px' }} />
-                {track.name} by {track.artist}
-                <button onClick={() => onRemove(track)}>Remove</button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No tracks added yet.</p>
-        )}
-        <button onClick={savePlaylist}>Save Playlist</button>
-      </div>
+      <Playlist
+        name={playlistName}
+        tracks={playlistTracks}
+        onRemove={onRemove}
+        onNameChange={setPlaylistName}
+        onSave={savePlaylist}
+      />
     </div>
   );
 }

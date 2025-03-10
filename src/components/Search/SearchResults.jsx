@@ -5,6 +5,8 @@ import TrackList from '../TrackList/TrackList';  // Import TrackList component
 function SearchResults({ results, onAdd }) {
   console.log("Rendering SearchResults with:", results);
 
+
+  if (results.length === 0) { return null }
   return (  
     <div className="SearchResults">
       <h2>Search Results</h2>
