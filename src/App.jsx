@@ -69,7 +69,11 @@ function App() {
 
   return (
     <div>
-      <h1>Spotify Playlist App</h1>
+      <header className='header'>
+        <h1 id="header-title">MySpotifyPlaylist</h1>
+        <a href="https://open.spotify.com/" target='_blank'><img src="../images/logo_black.png" className='logo'/></a>
+      </header>
+
       <SearchBar onSearch={handleSearch} />
       <SearchResults results={searchResults} onAdd={onAdd} />
 
