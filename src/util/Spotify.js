@@ -30,7 +30,7 @@ const Spotify = {
       return accessToken;
     }
 
-    console.log("🔑 No token found, redirecting to login...");
+    console.log("No token found, redirecting to login...");
     window.location.href = Spotify.getAuthURL();
     return "";
   },
@@ -39,7 +39,7 @@ const Spotify = {
     const token = Spotify.getAccessToken();
     if (!token) return [];
 
-    console.log(`🔎 Searching Spotify API for: ${term}`);
+    console.log(`Searching Spotify API for: ${term}`);
     
     try {
       const response = await fetch(
@@ -53,7 +53,7 @@ const Spotify = {
       }
       
       const data = await response.json();
-      console.log("🔍 API Response Data:", data);
+      console.log("API Response Data:", data);
       if (!data.tracks) return [];
 
       return data.tracks.items.map((track) => ({
@@ -65,7 +65,7 @@ const Spotify = {
         uri: track.uri, 
       }));
     } catch (error) {
-      console.error("⚠️ Error fetching data from Spotify:", error);
+      console.error("Error fetching data from Spotify:", error);
       return [];
     }
   },
