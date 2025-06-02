@@ -48,7 +48,7 @@ const Spotify = {
       );
       
       if (!response.ok) {
-        console.error(`❌ API Error: ${response.status} - ${response.statusText}`);
+        console.error(`API Error: ${response.status} - ${response.statusText}`);
         return [];
       }
       
@@ -61,8 +61,8 @@ const Spotify = {
         name: track.name,
         artist: track.artists[0].name,
         album: track.album.name,
-        albumImage: track.album.images[0]?.url, // ✅ Fetch album image
-        uri: track.uri, // ✅ Fetch track URI for saving
+        albumImage: track.album.images[0]?.url, 
+        uri: track.uri, 
       }));
     } catch (error) {
       console.error("⚠️ Error fetching data from Spotify:", error);

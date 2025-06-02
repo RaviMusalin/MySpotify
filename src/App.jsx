@@ -26,9 +26,6 @@ function App() {
   const [playlistTracks, setPlaylistTracks] = useState([]); // Tracks added to the playlist
   const [backgroundIndex, setBackgroundIndex] = useState(0);
 
-  const backgroundImages = [
-    "Jay-Z.jpg", "Kendrick.jpg"
-  ];
 
   useEffect(() => {
     const token = Spotify.getAccessToken();
@@ -38,12 +35,7 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBackgroundIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
-    }, 5000); // Change background every 5 seconds
-    return () => clearInterval(interval);
-  }, []);
+ 
 
   // Handle the search functionality
   const handleSearch = async (query) => {
@@ -95,28 +87,21 @@ function App() {
         <a href="https://open.spotify.com/" target='_blank'><img src="../images/logo_black.png" className='logo'/></a>
       </header>
 
-      <div
-      className="app-container"
-      style={{
-        backgroundImage: `url(../images/${backgroundImages[backgroundIndex]})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        minHeight: "100vh",
-        width: "100%",
-      }}
-    >
+      <div className="app-container">
 
-      <SearchBar onSearch={handleSearch} />
-      <SearchResults results={searchResults} onAdd={onAdd} />
 
-      <Playlist
-        name={playlistName}
-        tracks={playlistTracks}
-        onRemove={onRemove}
-        onNameChange={setPlaylistName}
-        onSave={savePlaylist}
-      />
+      <div className="main-content">
+  <SearchBar onSearch={handleSearch} />
+  <SearchResults results={searchResults} onAdd={onAdd} />
+</div>
+
+<Playlist
+  name={playlistName}
+  tracks={playlistTracks}
+  onRemove={onRemove}
+  onNameChange={setPlaylistName}
+  onSave={savePlaylist}
+/>
     </div>
     </div>
   );

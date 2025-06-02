@@ -29,3 +29,50 @@
    height: 50px;
    padding-right: 25px;
 }
+
+.app-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    min-height: 100vh;
+    padding: 40px;
+    gap: 40px;
+  }
+  
+  /* Center column for search */
+  .main-content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Playlist floated right */
+  .Playlist {
+    flex: 1;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 350px;
+  }
+  
+  /* Optional tweaks for spacing */
+  .SearchBar input {
+    padding: 10px;
+    font-size: 16px;
+    width: 300px;
+    margin-right: 10px;
+  }
+  
+  .SearchBar button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  .SearchResults {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 600px;
+  }
+  
