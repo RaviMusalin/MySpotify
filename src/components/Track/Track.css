@@ -23,6 +23,7 @@
 .Track-info h3, .Track-info p {
   margin: 0;
   color: white; 
+}
 
 .Track-info button {
   margin-top: 10px;
@@ -32,4 +33,18 @@
   border-radius: 20px;
   font-weight: bold;
   cursor: pointer;
+  transition: transform 0.3s ease;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.Track-info button:hover {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #1ed760;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transform: scale(1.05);
+  color: white;
 }

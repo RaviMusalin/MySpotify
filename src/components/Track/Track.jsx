@@ -7,7 +7,7 @@ function Track({ track, onAdd }) {
       <div className="Track-info">
         <h3>{track.name} by {track.artist}</h3>
         <p>Album: {track.album}</p>
-        <button onClick={() => onAdd(track)}>Add to Playlist</button>
+        <button className="AddTrackButton" onClick={() => onAdd(track)}>Add to Playlist</button>
       </div>
     </div>
   );

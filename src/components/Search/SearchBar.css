@@ -4,9 +4,14 @@
     text-align: center;
 }
 
+.SearchBar input {
+    border-radius: 15px;
+}
+
 .SearchButton {
     border-radius: 10px;
     background-color: white;
+    transition: transform 0.3s ease;
 }
 
 .SearchButton:hover {

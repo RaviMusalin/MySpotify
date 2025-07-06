@@ -45,7 +45,7 @@ body, html {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: white;
+    background-color: black;
     min-height: 100vh;
     padding: 40px;
     gap: 40px;
