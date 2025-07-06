@@ -20,3 +20,25 @@
     transform: scale(1.05);
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .SearchBar {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .SearchBar input {
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+  
+    .SearchButton {
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+    }
+  }
+  

@@ -26,3 +26,74 @@
     transform: scale(1.05);
     cursor: pointer;
 }
+
+@media (max-width: 1024px) {
+    .Playlist {
+      width: 100%;
+      max-width: 100%;
+      padding: 20px;
+    }
+  
+    .Playlist input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  
+    .PlaylistButton {
+      width: 100%;
+      margin-top: 10px;
+    }
+  
+    .TrackList {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .Playlist {
+      padding: 15px;
+      align-items: stretch; /* Align content to left */
+      text-align: left;
+    }
+  
+    .Playlist h2 {
+      text-align: center;
+    }
+  
+    .Playlist input {
+      width: 100%;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  
+    .PlaylistButton {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+  
+    .TrackList {
+      width: 100%;
+    }
+  
+    .Track {
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .Track img {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .Track-info h3, .Track-info p {
+      font-size: 14px;
+    }
+  
+    .Track-info button {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  }
+  

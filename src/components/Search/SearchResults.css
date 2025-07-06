@@ -1,19 +1,50 @@
 /* SearchResults.css */
 .results-wrapper {
-    background-color: rgba(255, 255, 255, 0.2); /* off-black with opacity */
-    padding: 30px;
-    border-radius: 12px;
-    margin-top: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
+  /* off-black with opacity */
+  padding: 30px;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: give some spacing between each track */
+.results-wrapper .track {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px 0;
+}
+
+.results-wrapper .track:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .SearchResults {
+    width: 100%;
+    padding: 0 10px;
   }
-  
-  /* Optional: give some spacing between each track */
+
+  .results-wrapper {
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .results-wrapper h2 {
+    font-size: 18px;
+    text-align: center;
+  }
+
   .results-wrapper .track {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 15px 0;
+    padding: 10px 0;
   }
-  
-  .results-wrapper .track:last-child {
-    border-bottom: none;
+}
+
+@media (max-width: 1024px) {
+  .results-wrapper {
+    padding: 25px;
   }
-  
+
+  .results-wrapper .track {
+    padding: 12px 0;
+  }
+}
