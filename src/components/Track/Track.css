@@ -20,9 +20,10 @@
   border-radius: 8px;
 }
 
-.Track-info h3, .Track-info p {
+.Track-info h3,
+.Track-info p {
   margin: 0;
-  color: white; 
+  color: white;
 }
 
 .Track-info button {
@@ -47,4 +48,55 @@
   cursor: pointer;
   transform: scale(1.05);
   color: white;
+}
+
+@media (max-width: 768px) {
+  .Track {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .Track img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .Track-info h3 {
+    font-size: 14px;
+  }
+
+  .Track-info p {
+    font-size: 12px;
+  }
+
+  .Track-info button {
+    font-size: 12px;
+    padding: 6px 12px;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .Track {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .Track img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .Track-info h3,
+  .Track-info p {
+    font-size: 14px;
+  }
+
+  .Track-info button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
 }
