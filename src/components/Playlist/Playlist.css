@@ -1,3 +1,24 @@
 .Playlist {
     background-color: rgba(255, 255, 255, 0.2); /* off-black with opacity */
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.Playlist input {
+    border-radius: 15px;
+    padding: 10px;
+
+}
+
+.PlaylistButton {
+    border-radius: 10px;
+    background-color: white;
+    transition: transform 0.3s ease;
+}
+
+.PlaylistButton:hover {
+    background-color: #1ed760;
+    color: white;
+    transform: scale(1.05);
+    cursor: pointer;
 }

@@ -22,7 +22,7 @@ function Callback() {
 
 function App() {
   const [searchResults, setSearchResults] = useState([]); // Search results
-  const [playlistName, setPlaylistName] = useState("My Playlist"); // Playlist name
+  const [playlistName, setPlaylistName] = useState(); // Playlist name
   const [playlistTracks, setPlaylistTracks] = useState([]); // Tracks added to the playlist
   const [backgroundIndex, setBackgroundIndex] = useState(0);
 
@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
     const token = Spotify.getAccessToken();
     if (!token) {
-      console.log("🔑 No token found, redirecting to login...");
+      console.log("No token found, redirecting to login...");
       window.location.href = Spotify.getAuthURL();
     }
   }, []);
