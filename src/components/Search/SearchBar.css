@@ -3,3 +3,15 @@
     justify-content: center;
     text-align: center;
 }
+
+.SearchButton {
+    border-radius: 10px;
+    background-color: white;
+}
+
+.SearchButton:hover {
+    background-color: #1ed760;
+    color: white;
+    transform: scale(1.05);
+    cursor: pointer;
+}

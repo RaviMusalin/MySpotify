@@ -1,0 +1,19 @@
+/* SearchResults.css */
+.results-wrapper {
+    background-color: rgba(10, 10, 10, 0.6); /* off-black with opacity */
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Optional: give some spacing between each track */
+  .results-wrapper .track {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 0;
+  }
+  
+  .results-wrapper .track:last-child {
+    border-bottom: none;
+  }
+  

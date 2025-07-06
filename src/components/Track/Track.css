@@ -1,55 +1,35 @@
+/* Track.css */
 .Track {
-    display: flex;
-    align-items: center;
-    background-color: #f0f9ff; /* soft light blue */
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    padding: 15px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-  }
-  
-  .Track img {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
-    margin-right: 20px;
-    object-fit: cover;
-  }
-  
-  .Track-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .Track-info h3 {
-    margin: 0 0 5px;
-    font-size: 18px;
-  }
-  
-  .Track-info p {
-    margin: 0;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .Track button {
-    padding: 8px 12px;
-    margin-top: 10px;
-    font-size: 14px;
-    background-color: #1ed760;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: flex-start;
-    transition: background-color 0.3s ease;
-  }
-  
-  .Track button:hover {
-    background-color: #1db954;
-  }
-  
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  background-color: transparent;
+  box-shadow: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.Track:last-child {
+  border-bottom: none;
+}
+
+.Track img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.Track-info h3, .Track-info p {
+  margin: 0;
+  color: white; 
+
+.Track-info button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #1ed760;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}

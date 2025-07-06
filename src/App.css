@@ -6,6 +6,16 @@
     height: 200px;
 }
 
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Make header span full width */
+.header {
+  width: 100%;
+}
+
 .header {
     background-color: #1ed760;
     display: flex;
@@ -13,7 +23,8 @@
     justify-content: space-between; /* Push title to center and logo to right */
     height: 25vh;
     width: 100%;
-    /* margin-bottom: 20px; */
+    margin: 0;
+    padding: 0;
 }
 
 #header-title {
@@ -68,6 +79,7 @@
   .SearchBar button {
     padding: 10px 20px;
     font-size: 16px;
+    border-radius: 20pxx;
   }
   
   .SearchResults {
