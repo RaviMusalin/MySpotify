@@ -54,7 +54,11 @@
 .Track-info {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  /* CENTER everything horizontally */
   justify-content: center;
+  /* CENTER vertically (for buttons/text) */
+  gap: 6px;
 }
 
 
@@ -109,7 +113,13 @@
   }
 
   .Track-info {
-  align-items: center;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* CENTER everything horizontally */
+    justify-content: center;
+    /* CENTER vertically (for buttons/text) */
+    gap: 6px;
+  }
 
 }
