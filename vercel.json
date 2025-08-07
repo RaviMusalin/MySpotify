@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "myspotify.net" }],
+      "destination": "https://www.myspotify.net",
+      "permanent": true
+    }
+  ]
+}
