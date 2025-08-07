@@ -29,7 +29,8 @@
 .Track-info button {
   margin-top: 10px;
   padding: 8px 16px;
-  background-color: #1ed760;
+  background-color: #1ed760 !important;
+  color: white !important;
   border: none;
   border-radius: 20px;
   font-weight: bold;
@@ -49,6 +50,13 @@
   transform: scale(1.05);
   color: white;
 }
+
+.Track-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 
 @media (max-width: 768px) {
   .Track {
@@ -99,4 +107,9 @@
     font-size: 14px;
     padding: 8px 16px;
   }
+
+  .Track-info {
+  align-items: center;
+}
+
 }
