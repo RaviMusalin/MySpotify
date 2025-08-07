@@ -1,5 +1,5 @@
 .Playlist {
-    background-color: rgba(255, 255, 255, 0.2); /* off-black with opacity */
+    background-color: #1ed760; /* off-black with opacity */
     color: white;
     font-family: 'Times New Roman', Times, serif;
     display: flex;
